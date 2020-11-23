@@ -3,6 +3,7 @@ package com.iram.movietime.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.iram.movietime.BuildConfig
 import com.iram.movietime.db.AppDatabase
 import com.iram.movietime.db.dao.MovieDao
 import com.iram.movietime.network.iService
@@ -24,7 +25,6 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object AppModule {
 
-    private val BASE_URL: String = "https://api.themoviedb.org/3/movie/"
     @Provides
     @Singleton
     fun provideHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -44,7 +44,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson,client: OkHttpClient) : Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 

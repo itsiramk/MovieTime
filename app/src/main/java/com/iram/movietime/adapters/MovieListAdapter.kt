@@ -1,6 +1,7 @@
 package com.iram.movietime.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,8 +13,14 @@ import com.iram.movietime.databinding.ItemMovieListBinding
 import com.iram.movietime.db.entity.Movie
 import java.util.*
 
-class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+class MovieListAdapter(private val listener: MoviesItemListener) :
+    RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+
     private var items = ArrayList<Movie>()
+
+    interface MoviesItemListener {
+        fun onClickedItemData(id: Int,name: String)
+    }
 
     fun setItems(items: ArrayList<Movie>) {
         this.items.clear()
@@ -22,18 +29,26 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHold
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
-        val itemDataBinding = ItemMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieListViewHolder(itemDataBinding)
+        val itemDataBinding =
+            ItemMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieListViewHolder(itemDataBinding, listener)
     }
 
-    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) =
+        holder.bind(items[position])
 
     override fun getItemCount(): Int = items.size
 
-    class MovieListViewHolder(private val itemBinding: ItemMovieListBinding)
-        : RecyclerView.ViewHolder(itemBinding.root){
+    class MovieListViewHolder(
+        private val itemBinding: ItemMovieListBinding,
+        private val listener: MoviesItemListener
+    ) : RecyclerView.ViewHolder(itemBinding.root), View.OnClickListener {
 
         private lateinit var itemList: Movie
+
+        init {
+            itemBinding.root.setOnClickListener(this)
+        }
 
         fun bind(item: Movie) {
             itemList = item
@@ -48,5 +63,10 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.MovieListViewHold
                 .into(itemBinding.imgMoviePoster)
 
         }
+
+        override fun onClick(p0: View?) {
+            listener.onClickedItemData(itemList.id,itemList.originalTitle)
+        }
     }
+
 }

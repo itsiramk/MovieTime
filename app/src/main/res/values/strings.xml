@@ -2,4 +2,6 @@
     <string name="app_name">MovieTime</string>
     <string name="enter_text">Enter Text</string>
     <string name="book">BOOK</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="actors">Actors</string>
 </resources>

@@ -11,7 +11,7 @@
         android:label="Movie List"
         tools:layout="@layout/layout_movielist" >
         <action
-            android:id="@+id/action_charactersFragment_to_characterDetailFragment"
+            android:id="@+id/action_moviesListFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
 
     </fragment>

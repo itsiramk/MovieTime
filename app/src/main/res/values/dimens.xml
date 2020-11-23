@@ -6,5 +6,8 @@
     <dimen name="density_20dp">20dp</dimen>
     <dimen name="density_30dp">30dp</dimen>
     <dimen name="density_70dp">70dp</dimen>
+    <dimen name="app_bar_height">350dp</dimen>
+    <dimen name="density_100dp">100dp</dimen>
+    <dimen name="density_50dp">50dp</dimen>
 
 </resources>

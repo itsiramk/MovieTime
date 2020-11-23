@@ -1,16 +1,18 @@
 package com.iram.movietime.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.iram.movietime.R
 import com.iram.movietime.adapters.MovieListAdapter
 import com.iram.movietime.databinding.LayoutMovielistBinding
 import com.iram.movietime.db.entity.Movie
@@ -20,7 +22,7 @@ import com.iram.movietime.viewmodel.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
 
     private var binding: LayoutMovielistBinding by autoCleared()
     private lateinit var moviesAdapter: MovieListAdapter
@@ -39,12 +41,10 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         fetchMoviesData()
-        //setupRecyclerView()
-        //setupObservers()
     }
 
     private fun initViews() {
-        moviesAdapter = MovieListAdapter()
+        moviesAdapter = MovieListAdapter(this)
         binding.rView.layoutManager = LinearLayoutManager(context)
         binding.rView.setItemAnimator(DefaultItemAnimator())
         binding.rView.adapter = moviesAdapter
@@ -68,7 +68,6 @@ class MovieListFragment : Fragment() {
                     }
                 }
                 Resource.Status.ERROR -> {
-                    Log.d("TAG>>> ", it.message+"")
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING ->
@@ -77,4 +76,10 @@ class MovieListFragment : Fragment() {
         })
     }
 
+    override fun onClickedItemData(id: Int,name:String) {
+        findNavController().navigate(
+            R.id.action_moviesListFragment_to_movieDetailFragment,
+            bundleOf("id" to id,"name" to name)
+        )
+    }
 }

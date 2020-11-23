@@ -1,7 +1,7 @@
 package com.iram.movietime.remote
 
+import com.iram.movietime.model.credits.Credits
 import com.iram.movietime.network.iService
-import com.iram.movietime.remote.BaseDataSource
 import javax.inject.Inject
 
 class ServerDataSource @Inject constructor(
@@ -9,4 +9,7 @@ class ServerDataSource @Inject constructor(
 ): BaseDataSource() {
 
     suspend fun getMovieData(apiKey:String) = getResult { iService.getMoviesList(apiKey) }
+    suspend fun getCreditDetails(movieId: String, apiKey:String): Credits {
+       return iService.getCreditDetails(movieId,apiKey)
+    }
 }

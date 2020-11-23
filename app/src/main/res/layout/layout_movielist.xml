@@ -5,6 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/appBar"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme"
+            app:title="@string/app_name"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clInput"
         android:layout_width="match_parent"
@@ -13,9 +33,9 @@
         android:background="@drawable/layout_bg"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/appBar"
+        app:layout_constraintStart_toEndOf="@+id/appBar"
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/etSearch"
@@ -49,7 +69,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/layout_bg"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/clInput"
         app:layout_constraintStart_toEndOf="@+id/clInput"
@@ -64,7 +84,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_movie_list"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar

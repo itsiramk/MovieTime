@@ -5,10 +5,10 @@
     <solid android:color="@android:color/transparent" />
 
     <stroke
-        android:width="2dp"
-        android:color="@android:color/black" />
+        android:width="5dp"
+        android:color="@color/colorPrimaryDark" />
 
     <size
-        android:width="300dp"
-        android:height="300dp" />
+        android:width="500dp"
+        android:height="500dp" />
 </shape>

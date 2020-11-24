@@ -43,7 +43,8 @@ class MoviesViewModel @ViewModelInject constructor(
             emit(Resource.error(data = null, message = exception.message ?: "Error occured"))
         }
     }
-     fun getMovieDetails(): LiveData<List<Movie>> {
+
+    fun getMovieDetails(): LiveData<List<Movie>> {
         return movieRepo.getMovieDetails()
     }
 }

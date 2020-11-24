@@ -1,8 +1,6 @@
 package com.iram.movietime.utils
 
-import android.content.Context
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -11,7 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.iram.movietime.R
 
 class UtilActivity {
-    companion object{
+    companion object {
         fun showProgress(pBar: ProgressBar, status: Boolean) {
             if (status) {
                 pBar.visibility = View.VISIBLE
@@ -19,7 +17,8 @@ class UtilActivity {
                 pBar.visibility = View.GONE
             }
         }
-        fun loadImage(context: CoordinatorLayout, imageView: AppCompatImageView, path:String){
+
+        fun loadImage(context: CoordinatorLayout, imageView: AppCompatImageView, path: String) {
             Glide.with(context).load(path)
                 .placeholder(R.drawable.ic_bookmyshow_logo_vector)
                 .error(R.drawable.ic_bookmyshow_logo_vector)

@@ -22,25 +22,25 @@
             android:background="@drawable/layout_circle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
         <TextView
             android:id="@+id/tvMovieTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/density_10dp"
+            android:layout_margin="@dimen/density_20dp"
             android:gravity="center"
             android:text="Test"
             style="@style/TextViewStyle_BOLD"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgMoviePoster"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvMovieReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/density_10dp"
+            android:layout_margin="@dimen/density_20dp"
             android:gravity="center"
             android:text="Test"
             style="@style/TextViewStyle_Details"
@@ -48,16 +48,14 @@
             app:layout_constraintStart_toEndOf="@+id/imgMoviePoster"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnBook"
+        <TextView
+            android:id="@+id/tvMovieLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/density_10dp"
+            android:layout_margin="@dimen/density_20dp"
             android:gravity="center"
-            android:padding="@dimen/density_10dp"
-            android:text="@string/book"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/layout_blue"
+            android:text="Test"
+            style="@style/TextViewStyle_Details"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgMoviePoster"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieReleaseDate" />

@@ -44,6 +44,7 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MovieListViewHolder>() {
             val url = BuildConfig.SMALL_IMAGE_URL + item.posterPath
             itemBinding.tvMovieTitle.text = item.originalTitle
             itemBinding.tvMovieReleaseDate.text = item.releaseDate
+            itemBinding.tvMovieLanguage.text = "Vote Average : " + item.voteAverage
             Glide.with(itemBinding.root).load(url).transform(CircleCrop())
                 .placeholder(R.drawable.ic_launcher_background)
                 .placeholder(R.drawable.ic_bookmyshow_logo_vector)

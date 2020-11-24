@@ -38,7 +38,7 @@ class MovieRepository @Inject constructor(
 
     fun getQueryData(query: String): LiveData<List<Movie>> {
         val search1 = "$query%"
-        val search2 = "% $query"
+        val search2 = "% $query%"
         return movieDao.getQueryData(search1, search2)
     }
 

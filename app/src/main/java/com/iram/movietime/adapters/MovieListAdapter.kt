@@ -19,7 +19,7 @@ class MovieListAdapter(private val listener: MoviesItemListener) :
     private var items = ArrayList<Movie>()
 
     interface MoviesItemListener {
-        fun onClickedItemData(id: Int,name: String,overview:String)
+        fun onClickedItemData(id: Int,position:Int,name: String,overview:String)
     }
 
     fun setItems(items: ArrayList<Movie>) {
@@ -63,12 +63,12 @@ class MovieListAdapter(private val listener: MoviesItemListener) :
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imgMoviePoster)
             itemBinding.btnBook.setOnClickListener{
-                listener.onClickedItemData(itemList.id,itemList.originalTitle,itemList.overview)
+                listener.onClickedItemData(itemList.id,adapterPosition,itemList.originalTitle,itemList.overview)
             }
         }
 
         override fun onClick(p0: View?) {
-            listener.onClickedItemData(itemList.id,itemList.originalTitle,itemList.overview)
+            listener.onClickedItemData(itemList.id,adapterPosition,itemList.originalTitle,itemList.overview)
         }
     }
 

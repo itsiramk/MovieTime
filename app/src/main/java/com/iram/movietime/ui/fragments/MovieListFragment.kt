@@ -80,10 +80,10 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,Search
         })
     }
 
-    override fun onClickedItemData(id: Int,name:String,overview:String) {
+    override fun onClickedItemData(id: Int,position:Int,name:String,overview:String) {
         findNavController().navigate(
             R.id.action_moviesListFragment_to_movieDetailFragment,
-            bundleOf("id" to id,"name" to name,"overview" to overview)
+            bundleOf("id" to id,"position" to position,"name" to name,"overview" to overview)
         )
     }
 
@@ -97,7 +97,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,Search
         return false
     }
     private fun fetchQueryDataFromDb(query: String) {
-        moviesViewModel.getQueryData(query).observe(
+        moviesViewModel.getQueryData(query.toLowerCase(Locale.ROOT)).observe(
             this,
             object : Observer<List<Movie>> {
                 override fun onChanged(listData: List<Movie>) {

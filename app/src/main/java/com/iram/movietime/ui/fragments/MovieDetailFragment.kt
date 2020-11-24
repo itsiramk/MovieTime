@@ -1,6 +1,5 @@
 package com.iram.movietime.ui.fragments
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
@@ -98,9 +95,9 @@ class MovieDetailFragment : Fragment() {
         arguments?.getInt("id")?.let { movieId = it.toString() }
         arguments?.getString("name")?.let { binding.moviesContent.tvTitle.text = it }
         arguments?.getString("overview")?.let { binding.moviesContent.tvMovieOverView.text = it }
+        arguments?.getInt("position")?.let {fetchMovieDataFromDb(it)}
         fetchActorData(movieId)
         fetchMovieContents(movieId)
-        fetchMovieDataFromDb()
     }
 
     private fun fetchActorData(moviedId: String) {
@@ -123,8 +120,8 @@ class MovieDetailFragment : Fragment() {
         })
     }
 
-    private fun renderMovieData(movieResult: List<Movie>) {
-        imageUrl = BuildConfig.LARGE_IMAGE_URL + movieResult.get(0).posterPath
+    private fun renderMovieData(movieResult: List<Movie>,position:Int) {
+        imageUrl = BuildConfig.LARGE_IMAGE_URL + movieResult.get(position).posterPath
         UtilActivity.loadImage(binding.root, binding.imgPoster, imageUrl)
         moviesAdapter.setItems(movieResult as ArrayList<Movie>)
     }
@@ -149,9 +146,9 @@ class MovieDetailFragment : Fragment() {
         })
     }
 
-    fun fetchMovieDataFromDb() {
+    fun fetchMovieDataFromDb(position: Int) {
         moviesViewModel.getMovieDetails().observe(viewLifecycleOwner,
-            { movie -> renderMovieData(movie) })
+            { movie -> renderMovieData(movie,position) })
     }
 
     private fun renderMovieData(reviews: Reviews) {

@@ -16,6 +16,6 @@ interface MovieDao {
     @Query("SELECT * FROM Movie")
     fun getMovieDetails(): LiveData<List<Movie>>
 
-    @Query("SELECT * FROM Movie where originalTitle LIKE :query1 OR originalTitle LIKE :query2")
+    @Query("SELECT * FROM Movie where LOWER(originalTitle) LIKE :query1 OR LOWER(originalTitle) LIKE :query2")
     fun getQueryData(query1: String,query2:String): LiveData<List<Movie>>
 }

@@ -26,3 +26,8 @@ Networking Libraries - Retrofit
 Database - Room
 
 UI - SwipeRefreshLayout, ConstraintLayout
+
+![image](https://user-images.githubusercontent.com/16866972/100124837-2711f500-2ea2-11eb-8a61-a63141dec752.png)
+
+![image](https://user-images.githubusercontent.com/16866972/100124928-3d1fb580-2ea2-11eb-94cf-8af1ebe03355.png)
+

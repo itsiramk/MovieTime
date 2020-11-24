@@ -20,7 +20,7 @@ import com.iram.movietime.adapters.MoviesAdapter
 import com.iram.movietime.databinding.LayoutMoviedetailsBinding
 import com.iram.movietime.db.entity.Movie
 import com.iram.movietime.model.credits.Credits
-import com.iram.movietime.model.reviews.Reviews
+import com.iram.movietime.model.reviews.ReviewResult
 import com.iram.movietime.utils.Resource
 import com.iram.movietime.utils.UtilActivity
 import com.iram.movietime.utils.autoCleared
@@ -78,6 +78,7 @@ class MovieDetailFragment : Fragment() {
             }
         })
     }
+
     private fun setupRecyclerView() {
         val mLayoutManager1 = LinearLayoutManager(context)
         val mLayoutManager2 = LinearLayoutManager(context)
@@ -95,9 +96,9 @@ class MovieDetailFragment : Fragment() {
         arguments?.getInt("id")?.let { movieId = it.toString() }
         arguments?.getString("name")?.let { binding.moviesContent.tvTitle.text = it }
         arguments?.getString("overview")?.let { binding.moviesContent.tvMovieOverView.text = it }
-        arguments?.getInt("position")?.let {fetchMovieDataFromDb(it)}
-        fetchActorData(movieId)
+        arguments?.getInt("position")?.let { fetchMovieDataFromDb(it) }
         fetchMovieContents(movieId)
+        fetchActorData(movieId)
     }
 
     private fun fetchActorData(moviedId: String) {
@@ -120,7 +121,7 @@ class MovieDetailFragment : Fragment() {
         })
     }
 
-    private fun renderMovieData(movieResult: List<Movie>,position:Int) {
+    private fun renderMovieData(movieResult: List<Movie>, position: Int) {
         imageUrl = BuildConfig.LARGE_IMAGE_URL + movieResult.get(position).posterPath
         UtilActivity.loadImage(binding.root, binding.imgPoster, imageUrl)
         moviesAdapter.setItems(movieResult as ArrayList<Movie>)
@@ -132,7 +133,7 @@ class MovieDetailFragment : Fragment() {
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
                         UtilActivity.showProgress(pBar, false)
-                        resource.data?.let { renderMovieData(it) }
+                        resource.data?.let { renderReviewData(it.results) }
                     }
                     Resource.Status.ERROR -> {
                         UtilActivity.showProgress(pBar, false)
@@ -148,15 +149,13 @@ class MovieDetailFragment : Fragment() {
 
     fun fetchMovieDataFromDb(position: Int) {
         moviesViewModel.getMovieDetails().observe(viewLifecycleOwner,
-            { movie -> renderMovieData(movie,position) })
+            { movie -> renderMovieData(movie, position) })
     }
 
-    private fun renderMovieData(reviews: Reviews) {
-        if (reviews.results.size > 0) {
-            val review = reviews.results[0]
-            val rating = context?.resources?.getString(R.string.movie_rating)
-            binding.moviesContent.tvMovieRating.text = rating + " " + review.author_details.rating
-        }
+    private fun renderReviewData(reviews: Array<ReviewResult>) {
+        val review = reviews.get(0)
+        val rating = context?.resources?.getString(R.string.movie_rating)
+        binding.moviesContent.tvMovieRating.text = rating + " " + review.author_details.rating
     }
 
     private fun renderActorData(credits: Credits) {

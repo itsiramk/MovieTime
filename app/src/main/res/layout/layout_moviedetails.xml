@@ -22,11 +22,9 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/app_bar_height"
-                android:height="250dp"
+                android:scaleType="fitXY"
                 android:textColor="@color/colorWhite"
                 style="@style/TextViewStyle_Header"
-                android:src="@drawable/ic_launcher_background"
-                android:background="@color/colorAccent"
                 app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar

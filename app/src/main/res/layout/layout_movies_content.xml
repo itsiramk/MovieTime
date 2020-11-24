@@ -1,81 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
- <TextView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:id="@+id/tvTitle"
-     style="@style/TextViewStyle_Header"
-     app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintTop_toTopOf="parent"
-     android:layout_margin="@dimen/density_10dp"
-     android:text="Test"/>
+    android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tvTitle"
+        style="@style/TextViewStyle_Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/density_10dp"
+        android:text="Test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tvMovieRating"
-        style="@style/TextViewStyle_Body"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        style="@style/TextViewStyle_Details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/density_10dp"
-        android:text="Test"/>
+        android:text="Test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <TextView
+        android:id="@+id/tvOverView"
+        style="@style/TextViewStyle_Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvMovieSummary"
-        style="@style/TextViewStyle_Summary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMovieRating"
         android:layout_margin="@dimen/density_10dp"
+        android:text="@string/overview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMovieRating" />
+
+    <View
+        style="@style/Divider"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Test"/>
-
+        android:id="@+id/viewOverview"
+        android:layout_marginTop="@dimen/density_10dp"
+        android:layout_marginBottom="@dimen/density_10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvOverView" />
     <TextView
+        android:id="@+id/tvMovieOverView"
+        style="@style/TextViewStyle_Details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/density_10dp"
+        android:text="@string/overview"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewOverview" />
+
+    <View
+        style="@style/Divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/viewMOverview"
+        android:layout_marginTop="@dimen/density_10dp"
+        android:layout_marginBottom="@dimen/density_10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvMovieOverView" />
+
+    <TextView
+        android:id="@+id/tvActorTitle"
+        style="@style/TextViewStyle_Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/density_10dp"
         android:text="@string/actors"
-        style="@style/TextViewStyle_Header"
-        app:layout_constraintTop_toBottomOf="@+id/tvMovieSummary"
-        android:id="@+id/tvActorTitle"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewMOverview" />
+
+    <View
+        android:id="@+id/viewActor"
+        style="@style/Divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/density_10dp"
+        android:layout_marginBottom="@dimen/density_10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvActorTitle" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="@dimen/density_10dp"
-        android:background="@color/colorBg"
-        tools:listitem="@layout/item_moviecast"
-        app:layout_constraintTop_toBottomOf="@+id/tvActorTitle"
         android:id="@+id/rvCast"
-        />
-
-   <TextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintStart_toStartOf="parent"
-       android:layout_margin="@dimen/density_20dp"
-       android:text="@string/similar_movies"
-       style="@style/TextViewStyle_Header"
-       app:layout_constraintTop_toBottomOf="@+id/rvCast"
-       android:id="@+id/tvSimilarMoviesTitle"
-       />
-
-    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/density_10dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="@dimen/density_20dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvSimilarMoviesTitle"
-        android:id="@+id/rvSimilarMovies"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/viewActor" />
+
+    <TextView
+        android:id="@+id/tvSimilarMovies"
+        style="@style/TextViewStyle_Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/density_10dp"
+        android:text="@string/similar_movies"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvCast" />
+
+    <View
+        android:id="@+id/viewMovie"
+        style="@style/Divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSimilarMovies" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMovies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/density_10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewMovie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

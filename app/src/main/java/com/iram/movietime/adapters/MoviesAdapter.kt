@@ -10,17 +10,13 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.iram.movietime.BuildConfig
 import com.iram.movietime.R
 import com.iram.movietime.databinding.ItemMovieListBinding
+import com.iram.movietime.databinding.ItemMoviesBinding
 import com.iram.movietime.db.entity.Movie
 import java.util.*
 
-class MovieListAdapter(private val listener: MoviesItemListener) :
-    RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>() {
+class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MovieListViewHolder>() {
 
     private var items = ArrayList<Movie>()
-
-    interface MoviesItemListener {
-        fun onClickedItemData(id: Int,name: String,overview:String)
-    }
 
     fun setItems(items: ArrayList<Movie>) {
         this.items.clear()
@@ -30,8 +26,8 @@ class MovieListAdapter(private val listener: MoviesItemListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val itemDataBinding =
-            ItemMovieListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieListViewHolder(itemDataBinding, listener)
+            ItemMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieListViewHolder(itemDataBinding)
     }
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) =
@@ -39,33 +35,19 @@ class MovieListAdapter(private val listener: MoviesItemListener) :
 
     override fun getItemCount(): Int = items.size
 
-    class MovieListViewHolder(
-        private val itemBinding: ItemMovieListBinding,
-        private val listener: MoviesItemListener
-    ) : RecyclerView.ViewHolder(itemBinding.root), View.OnClickListener {
+    class MovieListViewHolder(private val itemBinding: ItemMoviesBinding)
+        : RecyclerView.ViewHolder(itemBinding.root) {
 
         private lateinit var itemList: Movie
-
-        init {
-            itemBinding.root.setOnClickListener(this)
-        }
-
         fun bind(item: Movie) {
             itemList = item
             val url = BuildConfig.SMALL_IMAGE_URL + item.posterPath
             itemBinding.tvMovieTitle.text = item.originalTitle
             itemBinding.tvMovieReleaseDate.text = item.releaseDate
-            Glide.with(itemBinding.root)
-                .load(url)
-                .transform(CircleCrop())
+            Glide.with(itemBinding.root).load(url).transform(CircleCrop())
                 .placeholder(R.drawable.ic_launcher_background)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imgMoviePoster)
-
-        }
-
-        override fun onClick(p0: View?) {
-            listener.onClickedItemData(itemList.id,itemList.originalTitle,itemList.overview)
         }
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,9 +21,12 @@ import com.iram.movietime.utils.Resource
 import com.iram.movietime.utils.autoCleared
 import com.iram.movietime.viewmodel.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.layout_movielist.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
+class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,SearchView.OnQueryTextListener {
 
     private var binding: LayoutMovielistBinding by autoCleared()
     private lateinit var moviesAdapter: MovieListAdapter
@@ -41,6 +45,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         fetchMoviesData()
+        etSearch.setOnQueryTextListener(this)
     }
 
     private fun initViews() {
@@ -52,9 +57,6 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
             fetchMoviesData()
             binding.swipeRefresh.isRefreshing = false
         }
-        /* binding.btnSearch.setOnClickListener {
-             fetchQueryDataFromDb(binding.etSearch.query.toString())
-         }*/
     }
 
     private fun fetchMoviesData() {
@@ -63,6 +65,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
                 Resource.Status.SUCCESS -> {
                     binding.pBar.visibility = View.GONE
                     if (!it.data.isNullOrEmpty()) {
+                        filteredData=ArrayList()
                         filteredData = it.data
                         moviesAdapter.setItems(ArrayList(it.data))
                     }
@@ -76,10 +79,34 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener {
         })
     }
 
-    override fun onClickedItemData(id: Int,name:String) {
+    override fun onClickedItemData(id: Int,name:String,overview:String) {
         findNavController().navigate(
             R.id.action_moviesListFragment_to_movieDetailFragment,
-            bundleOf("id" to id,"name" to name)
+            bundleOf("id" to id,"name" to name,"overview" to overview)
+        )
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean {
+        fetchQueryDataFromDb(query)
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String): Boolean {
+        fetchQueryDataFromDb(newText)
+        return false
+    }
+    private fun fetchQueryDataFromDb(query: String) {
+        moviesViewModel.getQueryData(query).observe(
+            this,
+            object : Observer<List<Movie>> {
+                override fun onChanged(listData: List<Movie>) {
+                    if (listData.isEmpty()) {
+                        moviesAdapter.setItems(filteredData as java.util.ArrayList<Movie>)
+                    } else {
+                        moviesAdapter.setItems(listData as java.util.ArrayList<Movie>)
+                    }
+                }
+            }
         )
     }
 }

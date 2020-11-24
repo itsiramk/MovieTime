@@ -5,8 +5,11 @@ import com.iram.movietime.BuildConfig
 import com.iram.movietime.db.dao.MovieDao
 import com.iram.movietime.db.entity.Movie
 import com.iram.movietime.model.credits.Credits
+import com.iram.movietime.model.movieList.MovieListResults
+import com.iram.movietime.model.reviews.Reviews
 import com.iram.movietime.remote.ServerDataSource
 import com.iram.movietime.remote.fetchData
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,10 +29,17 @@ class MovieRepository @Inject constructor(
     suspend fun getCreditDetails(movieId: String) : Credits {
         return serverDataSource.getCreditDetails(movieId, BuildConfig.TMDB_API_KEY)
     }
-
+    suspend fun getReviews(movieId: String) : Reviews {
+        return serverDataSource.getReviews(movieId, BuildConfig.TMDB_API_KEY)
+    }
+     fun getMovieDetails(): LiveData<List<Movie>> {
+        return movieDao.getMovieDetails()
+    }
 
     fun getQueryData(query: String): LiveData<List<Movie>> {
-        return movieDao.getQueryData(query)
+        val search1 = query+"%"
+        val search2 = "% "+query+"%"
+        return movieDao.getQueryData(search1,search2)
     }
 
 }

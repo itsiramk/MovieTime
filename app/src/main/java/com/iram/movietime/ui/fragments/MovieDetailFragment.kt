@@ -15,18 +15,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.iram.movietime.BuildConfig
 import com.iram.movietime.R
 import com.iram.movietime.adapters.MovieCastAdapter
-import com.iram.movietime.adapters.MovieListAdapter
 import com.iram.movietime.adapters.MoviesAdapter
 import com.iram.movietime.databinding.LayoutMoviedetailsBinding
 import com.iram.movietime.db.entity.Movie
 import com.iram.movietime.model.credits.Credits
 import com.iram.movietime.model.reviews.Reviews
 import com.iram.movietime.utils.Resource
+import com.iram.movietime.utils.UtilActivity
 import com.iram.movietime.utils.autoCleared
 import com.iram.movietime.viewmodel.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_moviedetails.*
-import java.util.ArrayList
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -58,7 +58,7 @@ class MovieDetailFragment : Fragment() {
         setupRecyclerView()
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         val mLayoutManager1 = LinearLayoutManager(context)
         val mLayoutManager2 = LinearLayoutManager(context)
         mLayoutManager1.orientation = LinearLayoutManager.HORIZONTAL
@@ -79,23 +79,27 @@ class MovieDetailFragment : Fragment() {
         fetchMovieContents(movieId)
         fetchMovieDataFromDb()
     }
+
     private fun fetchActorData(moviedId: String) {
         moviesViewModel.getCreditData(moviedId).observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
-                        showProgress(false)
+                        UtilActivity.showProgress(pBar, false)
                         resource.data?.let { renderActorData(it) }
-                    }Resource.Status.ERROR -> {
-                        showProgress(false)
+                    }
+                    Resource.Status.ERROR -> {
+                        UtilActivity.showProgress(pBar, false)
                         Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    }Resource.Status.LOADING -> {
-                        showProgress(true)
+                    }
+                    Resource.Status.LOADING -> {
+                        UtilActivity.showProgress(pBar, true)
                     }
                 }
             }
         })
     }
+
     private fun renderMovieData(movieResult: List<Movie>) {
         val url = BuildConfig.LARGE_IMAGE_URL + movieResult.get(0).posterPath
         Glide.with(binding.root).load(url).placeholder(R.drawable.ic_launcher_background)
@@ -108,19 +112,24 @@ class MovieDetailFragment : Fragment() {
             it?.let { resource ->
                 when (resource.status) {
                     Resource.Status.SUCCESS -> {
-                        showProgress(false)
+                        UtilActivity.showProgress(pBar, false)
                         resource.data?.let { renderMovieData(it) }
-                    }Resource.Status.ERROR -> {
-                        showProgress(false)
+                    }
+                    Resource.Status.ERROR -> {
+                        UtilActivity.showProgress(pBar, false)
                         Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    }Resource.Status.LOADING -> { showProgress(true) }
+                    }
+                    Resource.Status.LOADING -> {
+                        UtilActivity.showProgress(pBar, true)
+                    }
                 }
             }
         })
     }
+
     fun fetchMovieDataFromDb() {
         moviesViewModel.getMovieDetails().observe(viewLifecycleOwner,
-            { movie -> renderMovieData(movie)})
+            { movie -> renderMovieData(movie) })
     }
 
     private fun renderMovieData(reviews: Reviews) {
@@ -130,16 +139,10 @@ class MovieDetailFragment : Fragment() {
             binding.moviesContent.tvMovieRating.text = rating + " " + review.author_details.rating
         }
     }
+
     private fun renderActorData(credits: Credits) {
         if (credits.cast.isNotEmpty()) {
             movieCastAdapter.setItems(credits.cast)
-        }
-    }
-    private fun showProgress(status: Boolean) {
-        if (status) {
-            pBar.visibility = View.VISIBLE
-        } else {
-            pBar.visibility = View.GONE
         }
     }
 }

@@ -14,10 +14,15 @@ Case 2 - If the user searches for - Le Jaayenge Dilwale, the list should display
 Android Components used:
 
 Development Language - Kotlin
+
 Architecture - MVVM
+
 Dependency Injection - Dagger Hilt
+
 JetPack - NavigationComponent
+
 Networking Libraries - Retrofit
+
 Database - Room
-View Binding
+
 UI - SwipeRefreshLayout, ConstraintLayout

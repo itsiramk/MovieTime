@@ -62,7 +62,9 @@ class MovieListAdapter(private val listener: MoviesItemListener) :
                 .error(R.drawable.ic_bookmyshow_logo_vector)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imgMoviePoster)
-
+            itemBinding.btnBook.setOnClickListener{
+                listener.onClickedItemData(itemList.id,itemList.originalTitle,itemList.overview)
+            }
         }
 
         override fun onClick(p0: View?) {

@@ -1,5 +1,6 @@
 package com.iram.movietime.ui.fragments
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
@@ -78,7 +81,6 @@ class MovieDetailFragment : Fragment() {
             }
         })
     }
-
     private fun setupRecyclerView() {
         val mLayoutManager1 = LinearLayoutManager(context)
         val mLayoutManager2 = LinearLayoutManager(context)

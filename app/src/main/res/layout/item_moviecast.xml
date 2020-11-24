@@ -5,6 +5,7 @@
     android:layout_height="@dimen/density_200dp"
     android:layout_margin="@dimen/density_10dp"
     android:elevation="@dimen/density_5dp"
+    android:stateListAnimator="@anim/left_to_right"
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

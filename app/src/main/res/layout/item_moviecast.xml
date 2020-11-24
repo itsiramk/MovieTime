@@ -14,8 +14,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgActor"
-            android:layout_width="@dimen/density_70dp"
-            android:layout_height="@dimen/density_70dp"
+            android:layout_width="@dimen/density_100dp"
+            android:layout_height="@dimen/density_100dp"
             android:layout_margin="@dimen/density_10dp"
             android:background="@drawable/layout_circle"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/tvActorName"
-            style="@style/TextViewStyle_Summary"
+            style="@style/TextViewStyle_Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/density_10dp"

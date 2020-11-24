@@ -1,8 +1,14 @@
 package com.iram.movietime.utils
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
-import kotlinx.android.synthetic.main.layout_moviedetails.*
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.iram.movietime.R
 
 class UtilActivity {
     companion object{
@@ -12,6 +18,12 @@ class UtilActivity {
             } else {
                 pBar.visibility = View.GONE
             }
+        }
+        fun loadImage(context: CoordinatorLayout, imageView: AppCompatImageView, path:String){
+            Glide.with(context).load(path)
+                .placeholder(R.drawable.ic_bookmyshow_logo_vector)
+                .error(R.drawable.ic_bookmyshow_logo_vector)
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
         }
     }
 }

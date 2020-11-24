@@ -1,5 +1,6 @@
 package com.iram.movietime.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.iram.movietime.BuildConfig
 import com.iram.movietime.R
 import com.iram.movietime.adapters.MovieCastAdapter
@@ -32,6 +33,7 @@ import java.util.*
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
+    private lateinit var imageUrl: String
     private lateinit var moviesAdapter: MoviesAdapter
     private lateinit var movieCastAdapter: MovieCastAdapter
     private val moviesViewModel: MoviesViewModel by viewModels()
@@ -56,6 +58,25 @@ class MovieDetailFragment : Fragment() {
         movieCastAdapter = MovieCastAdapter()
         moviesAdapter = MoviesAdapter()
         setupRecyclerView()
+        appbar.addOnOffsetChangedListener(object : OnOffsetChangedListener {
+            var isShow = false
+            var scrollRange = -1
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.totalScrollRange
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    binding.imgPoster.setImageResource(0)
+                    collapsing_toolbar.title = getString(R.string.movie_details)
+                    collapsing_toolbar.setCollapsedTitleTextColor(Color.WHITE)
+                    isShow = true
+                } else if (isShow) {
+                    collapsing_toolbar.title = ""
+                    UtilActivity.loadImage(binding.root, binding.imgPoster, imageUrl)
+                    isShow = false
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -101,9 +122,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun renderMovieData(movieResult: List<Movie>) {
-        val url = BuildConfig.LARGE_IMAGE_URL + movieResult.get(0).posterPath
-        Glide.with(binding.root).load(url).placeholder(R.drawable.ic_launcher_background)
-            .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.imgPoster)
+        imageUrl = BuildConfig.LARGE_IMAGE_URL + movieResult.get(0).posterPath
+        UtilActivity.loadImage(binding.root, binding.imgPoster, imageUrl)
         moviesAdapter.setItems(movieResult as ArrayList<Movie>)
     }
 

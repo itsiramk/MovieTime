@@ -18,6 +18,7 @@ import com.iram.movietime.adapters.MovieListAdapter
 import com.iram.movietime.databinding.LayoutMovielistBinding
 import com.iram.movietime.db.entity.Movie
 import com.iram.movietime.utils.Resource
+import com.iram.movietime.utils.UtilActivity
 import com.iram.movietime.utils.autoCleared
 import com.iram.movietime.viewmodel.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -43,7 +43,8 @@ class MovieCastAdapter : RecyclerView.Adapter<MovieCastAdapter.MovieCastViewHold
             Glide.with(itemBinding.root)
                 .load(url)
                 .transform(CircleCrop())
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_bookmyshow_logo_vector)
+                .error(R.drawable.ic_bookmyshow_logo_vector)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemBinding.imgActor)
 

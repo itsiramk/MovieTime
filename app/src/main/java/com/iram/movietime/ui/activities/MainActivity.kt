@@ -1,4 +1,4 @@
-package com.iram.movietime.ui
+package com.iram.movietime.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

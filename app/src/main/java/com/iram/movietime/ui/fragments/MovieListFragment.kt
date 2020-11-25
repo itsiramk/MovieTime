@@ -54,6 +54,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,Search
         binding.rView.layoutManager = LinearLayoutManager(context)
         binding.rView.setItemAnimator(DefaultItemAnimator())
         binding.rView.adapter = moviesAdapter
+        filteredData = ArrayList()
         binding.swipeRefresh.setOnRefreshListener {
             fetchMoviesData()
             binding.swipeRefresh.isRefreshing = false
@@ -66,13 +67,15 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,Search
                 Resource.Status.SUCCESS -> {
                     binding.pBar.visibility = View.GONE
                     if (!it.data.isNullOrEmpty()) {
-                        filteredData=ArrayList()
                         filteredData = it.data
                         moviesAdapter.setItems(ArrayList(it.data))
                     }
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(context,"Unable to reach server!!!", Toast.LENGTH_SHORT).show()
+                    if(filteredData.isNullOrEmpty())
+                        tvNoData.visibility = View.VISIBLE
+                    else
+                        Toast.makeText(context,context?.resources?.getString(R.string.noData), Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING ->
                     binding.pBar.visibility = View.VISIBLE

@@ -72,7 +72,7 @@ class MovieListFragment : Fragment(), MovieListAdapter.MoviesItemListener,Search
                     }
                 }
                 Resource.Status.ERROR -> {
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Unable to reach server!!!", Toast.LENGTH_SHORT).show()
                 }
                 Resource.Status.LOADING ->
                     binding.pBar.visibility = View.VISIBLE
